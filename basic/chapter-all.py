@@ -377,3 +377,146 @@ for dimension in dimensions:
     # 然后，打印新的尺寸（见❸）。
     # 这次，Python不会引发任何错误，因为给元组变量重新赋值是合法的：
 
+#5 if语句
+
+#5.1 一个简单示例
+cars = ['audi', 'bmw', 'subaru', 'toyota']
+for car in cars:
+    if car == 'bmw':
+        print(car.upper())
+    else:
+        print(car.title())
+
+#5.2 条件测试
+#每条if语句的核心都是一个值为True或False的表达式，这种表达式称为条件测试。
+
+#5.2.1 检查是否相等
+car = 'bmw'
+if car == 'bmw':
+    print(True)
+
+#5.2.2 检查是否相等时不考虑大小写
+car = 'Audi'
+print(car.lower() == 'audi')
+print(car)
+
+#5.2.3 检查是否不相等
+requested_topping = 'mushrooms'
+if requested_topping != 'anchovies':
+    print("Hold the anchovies!")
+
+#5.2.4 比较数字
+age = 18
+if age == 18:
+    print(True)
+if age != 19:
+    print(True)
+if age < 21:
+    print(True)
+if age <= 21:
+    print(True)
+if age > 21:
+    print(True)
+if age >= 21:
+    print(True)
+
+#5.2.5 检查多个条件
+age_0 = 22
+age_1 = 18
+if age_0 >= 21 and age_1 >= 21:
+    print(True)
+age_3 = 22
+if age_0 >= 21 and age_1 >= 21 and age_3 >= 21:
+    print(True)
+if age_0 >= 21 or age_1 >= 21:
+    print(True)
+if age_0 >= 21 or age_1 >= 21 or age_3 >= 21:
+    print(True)
+
+#5.2.6 检查特定值是否包含在列表中
+requested_toppings = ['mushrooms', 'onions', 'pineapple']
+if 'mushrooms' in requested_toppings:
+    print(True)
+if 'pepperoni' in requested_toppings:
+    print(True)
+if 'mushrooms' not in requested_toppings:
+    print(True)
+
+#5.2.7 布尔表达式
+game_active = True
+can_edit = False
+
+#5.3 if语句
+#5.3.1 简单的if语句
+age = 19
+if age >= 18:
+    print("You are old enough to vote!")
+    print("Have you registered to vote yet?")
+#5.3.2 if-else语句
+age = 17
+if age >=18:
+    print("You are old enough to vote!")
+    print("Have you registered to vote yet?")
+else:
+    print("Sorry, you are too young to vote.")
+    print("Please register to vote as soon as you turn 18!")
+
+#5.3.3 if-elif-else结构 && #5.3.4 使用多个elif代码块
+age = 19
+if age < 4:
+    print("Your admission cost is $0.")
+elif age < 18:
+    print("Your admission cost is $5.")
+elif age < 22:
+    print("Your admission cost is $10.")
+else:
+    print("Your admission cost is $15.")
+
+#5.3.5 省略else代码块
+age = 17
+if age < 4:
+    price = 0
+elif age < 18:
+    price = 5
+print(f"Your admission cost is ${price}.")
+
+#5.3.6 测试多个条件
+requested_toppings = ['mushrooms', 'extra cheese']
+if 'mushrooms' in requested_toppings:
+    print("Adding mushrooms.")
+if 'pepperoni' in requested_toppings:
+    print("Adding pepperoni.")
+if 'extra cheese' in requested_toppings:
+    print("Adding extra cheese.")
+print("\nFinished making your pizza!")
+
+#5.4 使用if语句处理列表
+#5.4.1 检查特殊元素
+requested_toppings = ['mushrooms', 'green peppers', 'extra cheese']
+for requested_topping in requested_toppings:
+    if requested_topping == 'green peppers':
+        print("Sorry, we are out of green peppers right now.")
+    else:
+        print(f"Adding {requested_topping}.")
+print("\nFinished making your pizza!")
+
+#5.4.2 确定列表不是空的
+requested_toppings = [] #先判断是否为空
+if requested_toppings:
+    for requested_topping in requested_toppings:
+        print(f"5.4.2 Adding {requested_topping}.")
+    print("\nFinished making your pizza!")
+else:
+    print("Are you sure you want a plain pizza?")
+
+#5.4.3 使用多个列表
+available_toppings = ['mushrooms', 'olives', 'green peppers', 'pepperoni', 'pineapple', 'extra cheese']
+requested_toppings = ['mushrooms', 'french fries', 'extra cheese']
+for requested_topping in requested_toppings:
+    if requested_topping in available_toppings:
+        print(f"5.4.3 Adding {requested_topping}.")
+    else:
+        print(f"5.4.3 Sorry, we don't have {requested_topping}.")
+print("\nFinished making your pizza!")
+
+
