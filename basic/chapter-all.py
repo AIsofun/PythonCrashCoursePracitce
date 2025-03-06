@@ -316,4 +316,64 @@ print(squares)
 # 你还可以处理列表的部分元素，Python称之为切片
 
 #4.4.1 切片
+players = ['charles', 'martina', 'michael', 'florence', 'eli']
+print(players[0:3])
+print(players[1:4])#不包含索引4的元素
+print(players[:4])
+print(players[2:])
+print(players[-3:])
+
+#4.4.2 遍历切片
+players = ['charles', 'martina', 'michael', 'florence', 'eli']
+print("Here are the first three players on my team:")
+for player in players[:3]:
+    print(player)
+
+#4.4.3 复制列表
+my_foods = ['pizza', 'falafel', 'carrot cake']
+friend_foods = my_foods[:]
+print("My favorite foods are:")
+print(my_foods)
+print("\nMy friend's favorite foods are:")
+print(friend_foods)
+
+my_foods.append('cannoli')
+friend_foods.append('ice cream')
+print("My favorite foods are:")
+print(my_foods)
+
+print("\nMy friend's favorite foods are:")
+print(friend_foods)
+
+#4.5 元组
+#列表非常适合用于存储在程序运行期间可能变化的数据集。
+# 列表是可以修改的，这对处理网站的用户列表或游戏中的角色列表至关重要。
+# 然而，有时候你需要创建一系列不可修改的元素，元组可以满足这种需求。
+# Python将不能修改的值称为不可变的，而不可变的列表被称为元组。
+
+#4.5.1 定义元组
+dimensions = (200, 50)
+print(dimensions[0])
+print(dimensions[1])
+
+#dimensions[0] = 20 #TypeError: 'tuple' object does not support item assignment
+#print(dimensions)
+
+#4.5.2 遍历元组中的所有值
+for dimension in dimensions:
+    print(dimension)
+
+#4.5.3 修改元组变量
+dimensions = (200, 50)
+print("Original dimensions:")
+for dimension in dimensions:
+    print(dimension)
+dimensions = (400, 100)
+print(dimensions)
+for dimension in dimensions:
+    print(dimension)
+    #首先定义一个元组，并将其存储的尺寸打印出来（见❶）。
+    # 接下来，将一个新元组关联到变量dimensions（见❷）。
+    # 然后，打印新的尺寸（见❸）。
+    # 这次，Python不会引发任何错误，因为给元组变量重新赋值是合法的：
 
