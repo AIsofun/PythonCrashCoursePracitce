@@ -520,3 +520,229 @@ for requested_topping in requested_toppings:
 print("\nFinished making your pizza!")
 
 
+#6 字典
+#在Python中，字典是一系列键值对。
+# 每个键都与一个值相关联，你可使用键来访问相关联的值。
+# 与键相关联的值可以是数、字符串、列表乃至字典。
+#事实上，可将任何Python对象用作字典中的值。
+#6.1 一个简单的字典
+alien_0 = {'color': 'green', 'points': 5}
+print(alien_0['color'])
+print(alien_0['points'])
+
+#6.2 使用字典
+alien_0 = {'color': 'green', 'points': 5}
+print(alien_0['color'])
+alien_0['color'] = 'yellow'
+print(alien_0['color'])
+
+alien_0['x_position']= 0
+print(alien_0)
+alien_0['y_position'] = 25
+print(alien_0)
+
+#6.2.1 访问字典中的值
+alien_0 = {'color': 'green'}
+print(alien_0['color'])
+
+#6.2.2 添加键值对
+alien_0 = {'color': 'green', 'points': 5}
+print(alien_0)
+alien_0['x_position'] = 0
+alien_0['y_position'] = 25
+print(alien_0)
+
+#6.2.3 先创建一个空字典
+alien_0 = {}
+alien_0['color'] = 'green'
+alien_0['points'] = 5
+print(alien_0)
+
+#6.2.4 修改字典中的值
+alien_0 = {'color': 'green'}
+alien_0['color'] = ''
+
+print(alien_0)
+
+
+
+alien_0 = {'x_position': 0, 'y_position': 25, 'speed': 'medium'}
+print(f"Original position: {alien_0['x_position']}")
+# 向右移动外星人
+# 据外星人当前速度决定将其移动多远
+if alien_0['speed'] == 'slow':
+    x_increment = 1
+elif alien_0['speed'] == 'medium':
+    x_increment = 2
+else:
+    x_increment = 3
+
+alien_0['x_position'] = alien_0['x_position'] + x_increment
+print(alien_0['x_position'])
+
+#6.2.5 删除键值对
+alien_0 = {'color': 'green', 'points': 5}
+print(alien_0)
+del alien_0['points']
+
+print(alien_0)
+
+#6.2.6 由类似对象组成的字典
+
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+}
+print(f"Sarah's favorite language is {favorite_languages['sarah'].title()}.")
+
+#6.2.7 使用get()获取字典中的值
+alien_0 = {'color': 'green', 'speed': 'slow'}
+#print(alien_0['points'])#KeyError: 'points'
+#Traceback (most recent call last):
+#  File "/Users/hwgeng/Documents/PythonCrashCoursePracitce/basic/chapter-all.py", line 602, in <module>
+#    print(alien_0['points'])#KeyError: 'points'
+#KeyError: 'points'
+
+
+point_value = alien_0.get('points', 'No point value assigned.')
+print(point_value)
+
+
+#6.3 遍历字典
+user_0 = {
+    'username': 'efermi',
+    'first': 'enrico',
+    'last': 'fermi',
+}
+
+for key, value in user_0.items():#items()返回一个键-值对列表,声明两个变量，用于存储键值对中的键和值
+    print(f"\nKey: {key}")
+    print(f"Value: {value}")
+
+#6.3.2 遍历字典中的所有键
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+}
+for name in favorite_languages.keys():#提取字典favorite_languages中的所有键，并依次将它们赋给变量name
+    print(name.title())
+
+#6.2.9 按顺序遍历字典中的所有键
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+}
+#遍历字典时，会默认遍历所有的键。因此，如果将上述代码中的：
+for name in favorite_languages:
+    print(name.title())
+#替换为：
+for name in favorite_languages.keys():
+    print(f"{name.title()}, thank you for taking the poll.")
+#输出将不变
+
+#6.3.4 遍历字典中的所有值
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+}
+print("The following languages have been mentioned:")
+for language in favorite_languages.values():
+    print(language.title())
+#这种做法提取字典中所有的值，而没有考虑是否重复。
+# 涉及的值很少时，这也许不是问题，但如果被调查者很多，
+# 最终的列表可能包含大量重复项。为剔除重复项，可使用集合（set）。
+# 集合中的每个元素都必须是独一无二的：
+
+for language in set(favorite_languages.values()):
+    print(language.title())
+
+#注意:
+#可使用一对花括号直接创建集合，并在其中用逗号分隔元素：
+languages = {'python', 'ruby', 'python', 'c'}
+for language in languages:
+    print(language.title())
+print(languages)
+
+#6.4 嵌套
+#有时候，需要将一系列字典存储在列表中，或将列表作为值存储在字典中，这称为嵌套。
+
+#6.4.1 字典列表
+alien_0 = {'color': 'green', 'points': 5}
+alien_1 = {'color': 'yellow', 'points': 10}
+alien_2 = {'color': 'red', 'points': 15}
+aliens = [alien_0, alien_1, alien_2]
+for alien in aliens:
+    print(alien)
+
+import random
+#自动生成aliens
+aliens = []
+for alien_number in range(30):
+    new_alien = {'color': 'green', 'points': random.randint(1, 100), 'speed': 'slow'}
+    aliens.append(new_alien)
+
+for alien in aliens[:5]:
+    print(alien)
+print("...")
+print(f"Total number of aliens: {len(aliens)}")
+
+for alien in aliens[0:3]:
+    if alien['color'] == 'green':
+        alien['color'] = 'yellow'
+        alien['speed'] = 'medium'
+        alien['points'] = 10
+    elif alien['color'] == 'yellow':
+        alien['color'] = 'red'
+        alien['speed'] = 'fast'
+        alien['points'] = 15
+print(aliens[:5])
+
+#6.4.2 在字典中存储列表
+pizza = {
+    'crust': 'thick',
+    'toppings': ['mushrooms', 'extra cheese'],
+}
+print(f"You ordered a {pizza['crust']}-crust pizza "
+      "with the following toppings:")
+for topping in pizza['toppings']:
+    print("\t" + topping)
+#每当需要在字典中将一个键关联到多个值时，都可以在字典中嵌套一个列表。
+favorite_languages = {
+    'jen': ['python', 'ruby'],
+    'sarah': ['c'],
+    'edward': ['ruby', 'go'],
+    'phil': ['python'],
+}
+for name, languages in favorite_languages.items():
+    print(f"\n{name.title()}'s favorite languages are:")
+    for language in languages:
+        print(f"\t{language.title()}")
+#6.4.3 在字典中存储字典
+users = {
+    'aeinstein': {
+        'first': 'albert',
+        'last': 'einstein',
+        'location': 'princeton',
+    },
+    'mcurie': {
+        'first': 'marie',
+        'last': 'curie',
+        'location': 'paris',
+    },
+}
+for username, user_info in users.items():
+    print(f"\nUsername: {username}")
+    full_name = f"{user_info['first']} {user_info['last']}"
+    location = user_info['location']
+    print(f"\tFull name: {full_name.title()}")
+    print(f"\tLocation: {location.title()}")
+#在前面的示例中，字典users 包含两个键：'aeinstein' 和'mcurie'。
+
