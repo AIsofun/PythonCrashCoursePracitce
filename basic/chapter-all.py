@@ -746,3 +746,121 @@ for username, user_info in users.items():
     print(f"\tLocation: {location.title()}")
 #在前面的示例中，字典users 包含两个键：'aeinstein' 和'mcurie'。
 
+#7 用户输入和while循环
+
+#7.1.1 编写清晰的程序
+#message = input("pls input your name:")
+#print("hello ",message, ", nice to meet you!")
+
+prompt = "If you tell us who you are, we can personalize the messages you see."
+prompt += "\nWhat is your first name? "
+#name = input(prompt)
+#print(f"\nHello, {name}!")
+
+#7.1.2 使用int()来获取数值输入
+#age = input("How old are you? ")
+#age = int(age)
+#print(age)
+
+
+#7.1.3 求模运算符
+print(4 % 3)
+print(5 % 3)
+print(6 % 3)
+print(7 % 3)
+#求模运算符不会指出一个数是另一个数的多少倍，而只指出余数是多少。
+number = random.randint(1, 100)
+if number % 2 == 0:
+    print(f"The number {number} is even.")
+else:
+    print(f"The number {number} is odd.")
+
+
+#7.2 while循环简介
+
+#7.2.1 使用while循环
+current_number = 1
+while current_number <= 5:
+    print(current_number)
+    current_number += 1
+
+#7.2.2 让用户选择何时退出
+prompt = "\nTell me something, and I will repeat it back to you:"
+prompt += "\nEnter 'quit' to end the program. "
+message = ""
+#while message != 'quit':
+    #message = input(prompt)
+    #if message != 'quit':
+    #    print(message)
+
+
+#7.2.3 使用标志
+active = True
+#while active:
+#    message = input(prompt)
+#    if message == 'quit':
+#        active = False
+#    else:
+#        print(message)
+
+#7.2.4 使用break退出循环
+#prompt = "\nPlease enter the name of a city you have visited:"
+#prompt += "\n(Enter 'quit' when you are finished.)"
+#while True:
+#    city = input(prompt)
+#    if city == 'quit':
+#        break
+#    else:
+#        print(f"I'd love to go to {city.title()}!")
+
+
+#7.2.5 在循环中使用continue
+
+current_number = 0
+while current_number < 10:
+    current_number += 1
+    if current_number % 2 == 0:
+        continue
+    print(current_number)
+
+#7.3 使用while循环来处理列表和字典
+
+unconfirmed_users = ['alice', 'brian', 'candace']
+confirmed_users = []
+while unconfirmed_users:
+    current_user = unconfirmed_users.pop()
+    print(f"Verifying user: {current_user.title()}")
+    confirmed_users.append(current_user)
+print("\nThe following users have been confirmed:")
+for confirmed_user in confirmed_users:
+    print(confirmed_user.title())
+
+#7.3.2 删除包含特定值的所有列表元素
+pets = ['dog', 'cat', 'dog', 'goldfish', 'cat', 'rabbit', 'cat']
+while 'cat' in pets:
+    pets.remove('cat')
+print(pets)    
+
+#7.3.3 使用用户输入来填充字典
+responses = {}
+
+while name != 'quit':
+    name = input('input your name: ')
+    if name == 'quit':
+        break
+    resp = input('input your respons: ')
+    responses[name] = resp
+print(responses)
+
+ # 设置一个标志，指出调查是否继续。  
+polling_active = True  
+while polling_active:      # 提示输入被调查者的名字和回答。
+    name = input("\nWhat is your name? ")      
+    response = input("Which mountain would you like to climbsomeday? ")      # 将回答存储在字典中
+    responses[name] = response      # 看看是否还有人要参与调查。
+    repeat = input("Would you like to let another person respond? (yes/ no) ") 
+    if repeat == 'no':          
+        polling_active = False  # 调查结束，显示结果。  
+print("\n--- Poll Results ---") 
+for name, response in responses.items():      
+    print(f"{name} would like to climb {response}.")
