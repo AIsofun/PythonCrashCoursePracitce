@@ -1219,3 +1219,222 @@ from module_name import *
 然后编写导入你自己编写的模块的import语句。
 在包含多条import语句的程序中，这种做法让人更容易明白程序使用的各个模块都来自何处。
 '''
+
+
+#10 文件和异常
+"""
+将学习处理文件，让程序能够快速地分析大量数据；
+你将学习错误处理，避免程序在面对意外情形时崩溃；
+你将学习异常，它们是Python创建的特殊对象，
+用于管理程序运行时出现的错误；
+你还将学习模块json，它让你能够保存用户数据，
+以免在程序停止运行后丢失。
+"""
+
+#10.1.1 读取整个文件
+import os
+print(os.getcwd())
+
+with open('basic/pi_digits.txt') as file_object:
+    contents = file_object.read()
+#    print(contents)
+
+print(contents.rstrip())
+
+#10.1.2 文件路径
+file_path = 'basic/pi_digits.txt'#变量filename表示的并非实际文件——它只是一个让Python知道到哪里去查找文件的字符串
+with open(file_path) as file_object:
+    contents = file_object.read()
+    print(contents.rstrip())
+#10.1.3 逐行读取
+with open(file_path) as file_object:
+    for line in file_object:
+        print(line)
+        #print(line.rstrip())
+#10.1.4 创建一个包含文件各行内容的列表
+with open(file_path) as file_object:
+    lines = file_object.readlines()
+
+for line in lines:
+    print(line.rstrip())
+
+#10.1.5 使用文件的内容
+pi_string = ''
+for line in lines:
+    pi_string += line.strip()
+print(pi_string)
+print(len(pi_string))
+
+#10.1.6 包含一千万位的大型文件
+#对于可处理的数据量，Python没有任何限制。
+# 只要系统的内存足够多，你想处理多少数据都可以。
+file_path = 'basic/pi_million_digits.txt'
+with open(file_path) as file_object:
+    lines = file_object.readlines()
+    for line in lines:
+        pi_string += line.strip()
+#print(f"{pi_string[:52]}...")
+#birthday = "20990101"
+birthday = "48955897"
+if birthday in pi_string:
+    print("Your birthday appears in the first ten million digits of pi!")
+else:
+    print("Your birthday does not appear in the first million digits of pi.")
+
+
+#10.2 写入文件
+
+file_path = 'basic/programming.txt'
+with open(file_path, 'a') as file_object: #a表示附加模式, w表示写入模式, r表示读取模式, r+表示读取和写入模式
+    contents = file_object.write('I love programming.')
+with open(file_path) as file_object:
+    c2 = file_object.read()
+    print(c2)
+
+#10.3 异常
+#Python使用称为异常的特殊对象来管理程序执行期间发生的错误。
+
+#10.3.1 处理ZeroDivisionError异常
+#print(5/0)#ZeroDivisionError: division by zero
+
+#10.3.2 使用try-except代码块
+try:
+    print(5/0)
+except ZeroDivisionError:
+    print("You can't divide by zero!")
+
+#10.3.3 使用异常避免崩溃 #10.3.4 else代码块
+print("Give me two numbers, and I'll divide them.")
+print("Enter 'q' to quit.")
+# while True:
+#     first_number = input("\nFirst number: ")
+#     if first_number == 'q':
+#         break
+#     second_number = input("Second number: ")
+#     if second_number == 'q':
+#         break
+#     try:
+#         answer = int(first_number) / int(second_number)
+#     except ZeroDivisionError:
+#         print("You can't divide by zero!")
+#     else:
+#         print(answer)
+   
+#10.3.5 处理FileNotFoundError异常
+filename = 'alice.txt'
+try:
+    with open(filename) as f_obj:
+        contents = f_obj.read()
+        print(contents)
+except FileNotFoundError:
+    print(f"Sorry, the file {filename} does not exist.")
+
+#10.3.6 分析文本
+file_path = 'basic/alice.txt'
+try :
+    with open(file_path) as f_obj:
+        contents = f_obj.read()
+except FileNotFoundError:
+    print(f"Sorry, the file {filename} does not exist.")
+else:
+    words = contents.split()#split()以空格为分隔符将字符串分拆成多个部分，并将这些部分都存储到一个列表中
+    num_words = len(words)
+    print(f"The file {file_path} has about {num_words} words.")
+
+#10.3.7 使用多个文件
+#《悉达多》《白鲸》《小妇人》
+filenames = ['sidao.txt', 'baijun.txt', 'xiaowomen.txt']
+for filename in filenames:
+    try:
+        with open(filename) as f_obj:
+            contents = f_obj.read()
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+    else:
+        words = contents.split()
+        num_words = len(words)
+        print(f"The file {filename} has about {num_words} words.")
+
+#10.3.8 静默失败
+def count_words(filename):
+    """计算一个文件里有多少个单词"""
+    try:
+        with open(filename) as f_obj:
+            contents = f_obj.read()
+    except FileNotFoundError:
+        pass#pass语句让Python什么都不要做，即可避免在文件不存在时引发异常
+    else:
+        words = contents.split()
+        num_words = len(words)
+        print(f"The file {filename} has about {num_words} words.")
+
+#10.3.9 决定报告哪个错误
+#Python的错误处理结构让你能够细致地控制与用户分享错误信息的程度，要分享多少信息由你决定。
+
+#10.4 存储数据
+
+#很多程序都要求用户输入某种信息，如让用户存储游戏首选项或提供要可视化的数据。不管关注点是什么，程序都把用户提供的信息存储在列表和字典等数据结构中。用户关闭程序时，几乎总是要保存他们提供的信息。一种简单的方式是使用模块json来存储数据。
+
+#10.4.1 使用json.dump()和json.load()
+
+import json
+numbers = [2,3,5,7,11,13]
+filename = 'basic/numbers.json'
+with open(filename, 'w') as f_obj:
+    json.dump(numbers, f_obj)
+
+with open(filename) as f_obj:
+    numbers = json.load(f_obj)
+print(numbers)
+
+#10.4.2 保存和读取用户生成的数据
+import json
+#username = input("What is your name? ")
+username = "Hali "
+filename = 'basic/username.json'
+with open(filename, 'w') as f_obj:
+    json.dump(username, f_obj)
+    print("We'll remember you when you come back, " + username + "!")
+try:
+    with open(filename) as f_obj:
+        username = json.load(f_obj)
+except FileNotFoundError:
+    print("Sorry, the file " + filename +"does not exist.")
+else:
+    print("Welcome back, "+ username + " !")
+
+#10.4.3 重构
+"""
+你经常会遇到这样的情况：代码能够正确地运行，
+但通过将其划分为一系列完成具体工作的函数，还可以改进。
+这样的过程称为重构。重构让代码更清晰、更易于理解、更容易扩展。
+"""
+
+def get_stored_username():
+    """如果存储了用户名，就获取它"""
+    filename = 'username.json'
+    try:
+        with open(filename) as f_obj:
+            username = json.load(f_obj)
+    except FileNotFoundError:
+        return None
+    else:
+        return username
+
+def get_new_username():
+    """提示用户输入用户名"""
+    username = input("What is your name? ")
+    filename = 'username.json'
+    with open(filename, 'w') as f_obj:
+        json.dump(username, f_obj)
+    return username
+def greet_user():
+    """问候用户，并指出其名字"""
+    username = get_stored_username()
+    if username:
+        print("Welcome back, " + username + "!")
+    else:
+        username = get_new_username()
+        print("we'll remember you when you come back, " + username + "!")
+
+greet_user()
