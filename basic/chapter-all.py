@@ -1438,3 +1438,135 @@ def greet_user():
         print("we'll remember you when you come back, " + username + "!")
 
 greet_user()
+
+
+#11 测试代码
+"""编写函数或类时，还可为其编写测试。
+通过测试，可确定代码面对各种输入都能够按要求的那样工作。"""
+
+"""学习如何使用Python模块unittest中的工具来测试代码，
+还将学习编写测试用例，核实一系列输入都将得到预期的输出。"""
+
+#繁琐的做法
+def get_formatted_name(first, last, middle=''):
+    """返回整洁的姓名"""
+    if middle:
+        full_name = first + ' ' + middle + ' ' + last
+    else:
+        full_name = first + ' ' + last
+    return full_name.title()
+#使用繁琐的做法编写一个测试的功能
+print("Enter 'q' at any time to quit.")
+# while True:
+#      print("\nPlease tell me your name:")
+#      print("(enter 'q' at any time to quit)")
+#      f_name = input("First name: ")
+#      if f_name == 'q':
+#          break
+#      l_name = input("Last name: ")
+#      if l_name == 'q':
+#          break
+#      formatted_name = get_formatted_name(f_name, l_name)
+#      print("\nHello, " + formatted_name + "!")
+
+#11.1.1单元测试和测试用例
+"""Python标准库中的模块unittest提供了代码测试工具。单元测试
+用于核实函数的某个方面没有问题。测试用例
+是一组单元测试，它们一道核实函数在各种情形下的行为都符合要求。良好的测试用例考虑到了函数可能收到的各种输入，包含针对所有这些情形的测试。全覆盖
+的测试用例包含一整套单元测试，涵盖了各种可能的函数使用方式。对于大型项目，要进行全覆盖测试可能很难。通常，最初只要针对代码的重要行为编写测试即可，等项目被广泛使用时再考虑全覆盖。"""
+
+#Python在unittest.TestCase类中提供了很多断言方法
+#asserEqual(a,b)
+#asserNotEqual(a,b)
+#asserTrue(a)
+#asserFalse(a)
+#asserIn(item, list)
+#asserNotIn(item, list)
+
+#11.1.2 可通过的测试
+import unittest
+
+class NameTestCase(unittest.TestCase):
+    """测试get_formatted_name()"""
+    def test_first_last_name(self):
+        """能够正确处理像Janis Joplin这样的姓名吗？"""
+        formatted_name = get_formatted_name('janis', 'joplin')
+        """下面这条语句使用了unittest类最有用的功能之一：断言
+方法。断言方法核实得到的结果是否与期望的结果一致。"""
+        self.assertEqual(formatted_name, 'Janis Joplin')
+    def test_first_middle_last_name(self):
+        """能够正确处理像Janis Joplin这样的姓名吗？"""
+        formatted_name = get_formatted_name('janis', 'joplin', "H")
+        self.assertEqual(formatted_name, 'Janis H Joplin')
+# if __name__ == '__main__':
+#         unittest.main()
+
+#11.2 测试类
+#前面编写了针对单个函数的测试，下面来编写针对类的测试。
+
+#11.2.2 一个要测试的类
+class AnonymousSurvey():
+        """收集匿名调查问卷的答案"""
+        def __init__(self, question):
+                """存储一个问题，并为存储答案做准备"""
+                self.question = question
+                self.responses = []
+        def show_question(self):
+                """显示调查问卷"""
+                print(self.question)
+        def store_response(self, new_response):
+                """存储单份调查问卷"""
+                self.responses.append(new_response)
+                return self.responses
+        def show_results(self):
+                """显示收集到的所有答案"""
+                print("Survey results:")
+                for response in self.responses:
+                        print('- ' + response)
+#11.2.3 测试AnonymousSurvey类  
+
+class TestAnonymousSurvey(unittest.TestCase):
+    """针对AnonymousSurvey类的测试"""
+    
+    """unittest.TestCase类包含的方法setUp()让我们只需创建这些对象一次，
+    就能在每个测试方法中使用。
+    如果在TestCase类中包含了方法setUp()，Python将先运行它，
+    再运行各个以test_打头的方法。"""
+    """方法setUp()做了两件事情：创建一个调查对象，
+    以及创建一个答案列表。
+    存储这两样东西的变量名包含前缀self（即存储在属性中），
+    因此可在这个类的任何地方使用。
+    这让两个测试方法都更简单，因为它们都不用创建调查对象和答案了。"""
+    def setUp(self):
+        """创建一个调查对象和一组答案，供使用的测试方法使用"""
+        question = "What language did you first learn to speak?"
+        self.my_survey = AnonymousSurvey(question)
+        self.responses = ['English', 'Spanish', 'Mandarin']
+
+    def test_store_single_response(self):
+        """测试单个答案会被妥善地存储"""
+        #my_sureve = AnonymousSurvey('What language did you first learn to speak?')
+        # my_sureve.store_response('English')
+        # self.assertIn('English', my_sureve.responses)
+        #self.assertIn('Chinese', my_sureve.responses)
+
+        self.my_survey.store_response(self.responses[0])
+        self.assertIn(self.responses[0], self.my_survey.responses)
+        
+    def test_store_three_response(self):
+        """测试三个答案会被妥善地存储"""
+        # my_sureve = AnonymousSurvey('What language did you first learn to speak?')
+        # responses = ['English', 'Chinese', 'Japanese']
+        # for response in responses:
+        #         my_sureve.store_response(response)
+        # for response in responses:
+        #         self.assertIn(response, my_sureve.responses)
+
+        for response in responses:
+                self.my_survey.store_response(response)
+        for response in responses:
+                self.assertIn(response, self.my_survey.responses)
+
+if __name__ == '__main__':
+    unittest.main()
+
