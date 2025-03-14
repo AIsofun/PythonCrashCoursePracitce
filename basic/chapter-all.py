@@ -844,23 +844,378 @@ print(pets)
 #7.3.3 使用用户输入来填充字典
 responses = {}
 
-while name != 'quit':
-    name = input('input your name: ')
-    if name == 'quit':
-        break
-    resp = input('input your respons: ')
-    responses[name] = resp
-print(responses)
+# while name != 'quit':
+#     name = input('input your name: ')
+#     if name == 'quit':
+#         break
+#     resp = input('input your respons: ')
+#     responses[name] = resp
+# print(responses)
 
  # 设置一个标志，指出调查是否继续。  
-polling_active = True  
-while polling_active:      # 提示输入被调查者的名字和回答。
-    name = input("\nWhat is your name? ")      
-    response = input("Which mountain would you like to climbsomeday? ")      # 将回答存储在字典中
-    responses[name] = response      # 看看是否还有人要参与调查。
-    repeat = input("Would you like to let another person respond? (yes/ no) ") 
-    if repeat == 'no':          
-        polling_active = False  # 调查结束，显示结果。  
-print("\n--- Poll Results ---") 
-for name, response in responses.items():      
-    print(f"{name} would like to climb {response}.")
+# polling_active = True  
+# while polling_active:      # 提示输入被调查者的名字和回答。
+#     name = input("\nWhat is your name? ")      
+#     response = input("Which mountain would you like to climbsomeday? ")      # 将回答存储在字典中
+#     responses[name] = response      # 看看是否还有人要参与调查。
+#     repeat = input("Would you like to let another person respond? (yes/ no) ") 
+#     if repeat == 'no':          
+#         polling_active = False  # 调查结束，显示结果。  
+# print("\n--- Poll Results ---") 
+# for name, response in responses.items():      
+    # print(f"{name} would like to climb {response}.")
+
+
+#8 函数
+
+#8.1 定义函数
+def greet_user():
+    print("hello")
+
+greet_user()
+
+
+def greet_user(username):
+    print(f"Hello, {username.title()}!")
+greet_user('jesse')
+
+#8.1.2 实参和形参
+#在函数greet_user()的定义中，变量username是一个形参——函数完成其工作所需的一项信息。
+# 在代码greet_user('jesse')中，值'jesse'是一个实参。实参是调用函数时传递给函数的信息。
+
+#8.2 传递实参
+#函数定义中可能包含多个形参，因此函数调用中也可能包含多个实参。
+#向函数传递实参的方式有很多，包括位置实参、关键字实参、还可以使用列表和字典。
+
+#8.2.1 位置实参
+
+#调用函数时，Python必须将函数调用中的每个实参都关联到函数定义中的一个形参。
+# 为此，最简单的关联方式是基于实参的顺序。这种关联方式称为位置实参
+def describe_pet(animal_type, pet_name):
+    """显示宠物的信息"""
+    print("\nI have a " + animal_type + ".")
+    print("My " + animal_type.title() + "'s name is " + pet_name.title() + ".")
+
+describe_pet('dogy', 'huazi')
+
+describe_pet(animal_type='hamster', pet_name='harry')
+
+#8.2.3 默认值
+def describe_pet(pet_name, animal_type='dog'):
+    """显示宠物的信息"""
+    print("\nI have a " + animal_type + ".")
+    print("My " + animal_type.title() + "'s name is " + pet_name.title() + ".")
+#这里修改了函数describe_pet()的定义，
+# 在其中给形参animal_type指定了默认值'dog'。这样，调用这个函数时，
+# 如果没有给animal_type指定值，Python就将把这个形参设置为'dog'：
+describe_pet('willie')
+
+#8.2.4 等效的函数调用
+def describe_pet(pet_name, animal_type='dog'):
+    """显示宠物的信息"""
+    print("\nI have a " + animal_type + ".")
+    print("My " + animal_type.title() + "'s name is " + pet_name.title() + ".")
+
+    # 一条名为Willie的小狗。
+describe_pet('willie')
+describe_pet(pet_name='willie')# 一只名为Harry的仓鼠。'
+describe_pet('harry', 'hamster')
+describe_pet(pet_name='harry', animal_type='hamster')
+describe_pet(animal_type='hamster', pet_name='harry')
+
+#8.2.5 避免实参错误
+def describe_pet(animal_type, pet_name):
+    """显示宠物的信息"""
+    print("\nI have a " + animal_type + ".")
+    print("My " + animal_type.title() + "'s name is " + pet_name.title() + ".")
+
+describe_pet('hamster', 'harry')
+describe_pet('dog', 'willie')
+describe_pet('harry', 'hamster')
+#describe_pet()#TypeError: describe_pet() missing 2 required positional arguments: 'animal_type' and 'pet_name'
+
+#8.3 返回值
+#8.3.1 简单的返回值
+def get_formatted_name(first_name, last_name):
+    """返回整洁的姓名"""
+    full_name = first_name + ' ' + last_name
+    return full_name.title()
+
+musician = get_formatted_name('jimi', 'hendrix')
+print(musician)
+
+#8.3.2 让实参变成可选的
+def get_formatted_name(first_name, last_name, middle_name=''):
+    """返回整洁的姓名"""
+    full_name = first_name + ' ' + middle_name + ' ' + last_name
+    return full_name.title()
+musician = get_formatted_name('john', 'hooker')
+print(musician)
+
+musician = get_formatted_name('john', 'hooker', 'h')
+print(musician)
+
+def get_formatted_name(first_name, last_name, middle_name=''):
+    """返回整洁的姓名"""
+    if middle_name:
+        full_name = first_name + ' ' + middle_name + ' ' + last_name
+    else:
+        full_name = first_name + ' ' + last_name
+    return full_name.title()
+musician = get_formatted_name('john', 'hooker')
+print(musician)
+musician = get_formatted_name('john', 'hooker', 'lee')
+print(musician)
+
+#8.3.3 返回字典
+def build_person(first_name, last_name, age=''):
+    """返回一个字典，其中包含有关一个人的信息"""
+    person = {'first': first_name, 'last': last_name}
+    if age:
+        person['age'] = age
+    return person
+musician = build_person('jimi', 'hendrix', 3)
+print(musician)
+
+
+#8.3.4 结合使用函数和while循环
+# def get_formatted_name(first_name, last_name):
+#     """返回整洁的姓名"""
+#     full_name = first_name + ' ' + last_name
+#     return full_name.title()
+# while True:
+#     print("\nPlease tell me your name:")
+#     print("(enter 'q' at any time to quit)")
+#     f_name = input("First name: ")
+#     if f_name == 'q':
+#         break
+#     l_name = input("Last name: ")
+#     if l_name == 'q':
+#         break
+#     formatted_name = get_formatted_name(f_name, l_name)
+#     print("Hello, " + formatted_name)
+
+#8.4 传递列表
+def greet_users(names):
+    """向列表中的每位用户都发出简单的问候"""
+    for name in names:
+        msg = "Hello, " + name.title() + "!"
+        print(msg) 
+names = ['hannah', 'ty', 'margot']
+greet_users(names)
+#8.4.1 在函数中修改列表
+unprinted_designs = ['iphone case', 'robot pendant', 'dodecahedron']
+compited_models = []
+def print_models(unprinted_designs, completed_models):
+    """
+    模拟打印每个设计，直到没有未打印的设计为止
+    打印每个设计后，都将其移到列表completed_models中
+    """
+    while unprinted_designs:
+        current_design = unprinted_designs.pop()
+        print("Printing model: " + current_design)
+        completed_models.append(current_design)
+print_models(unprinted_designs, compited_models)
+print(compited_models)
+
+#重新组织代码
+def print_models(unprinted_designs, completed_models):
+    """
+    模拟打印每个设计，直到没有未打印的设计为止
+    打印每个设计后，都将其移到列表completed_models中
+    """
+    while unprinted_designs:
+        current_design = unprinted_designs.pop()
+        print("Printing model: " + current_design)
+        completed_models.append(current_design)
+def show_completed_models(completed_models):
+    """显示打印好的所有模型"""
+    print("\nThe following models have been printed:")
+    for completed_model in completed_models:
+        print(completed_model)
+unprinted_designs = ['iphone case', 'robot pendant', 'dodecahedron']
+completed_models = []
+print_models(unprinted_designs, completed_models)
+show_completed_models(completed_models)
+
+#   8.4.2 禁止函数修改列表
+#要将列表的副本传递给函数，可以像下面这样做：
+def function_name(list_name):
+    """对列表进行修改"""
+    print(list_name)
+    list_name.append(6)
+    print(list_name)
+
+list_name_ = [1,2,3,4,5] 
+function_name(list_name_[:])#切片表示法[:]创建列表的副本
+print(list_name_)
+
+#8.5 传递任意数量的实参
+def make_pizza(*toppings):
+    """打印顾客点的所有配料"""
+    print(toppings)
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese', 4)
+
+#8.5.1 结合使用位置实参和任意数量实参
+def make_pizza(size, *toppings):
+    """概述要制作的披萨"""
+    print(f"\nMaking a {size}-inch pizza with the following toppings:")
+    for topping in toppings:
+        print(f"- {topping}")
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+#8.5.2 使用任意数量的关键字实参
+def build_profile(first, last, **user_info):
+    """创建一个字典，其中包含我们知道的用户的所有信息"""
+    profile = {}
+    profile['first_name'] = first
+    profile['last_name'] = last
+    for key, value in user_info.items():
+        profile[key] = value
+    return profile
+user_profile = build_profile('albert','einstein', location='princeton', field='physics')
+print(user_profile)
+
+#8.6 将函数存储在模块中
+# 使用函数的优点之一是可将代码块与主程序分离。
+# 通过给函数指定描述性名称，可让主程序容易理解得多。
+# 你还可以更进一步，将函数存储在称为模块
+# 的独立文件中，再将模块导入
+# 到主程序中。import语句允许在当前运行的程序文件中使用模块中的代码。
+
+#8.6.1 导入整个模块
+import pizza as pz
+pz.make_pizza_m(16,'pepperoni')
+pz.make_pizza_m(12,'mushrooms','green peppers','extra cheese')
+
+
+#8.6.2 导入模块中的特定函数
+from pizza import plus_
+print(plus_(2,3))
+from pizza import make_pizza_m as mp
+mp(16,'pepperoni')
+
+#8.6.3 使用as给  函数  指定别名
+
+from pizza import plus_ as pz2 #函数plus_()的别名pz2
+print(pz2(2,3))
+
+#8.6.4 使用as给模块指定别名
+import pizza as p
+p.make_pizza_m(16,'pepperoni')
+p.make_pizza_m(12,'mushrooms','green peppers','extra cheese')
+
+#8.6.5 导入模块中的所有函数
+from pizza import *
+print(plus_(2,9))
+make_pizza_m(16,'pepperoni')
+
+#8.7 函数编写指南
+#应给函数指定描述性名称，且只在其中使用小写字母和下划线。
+#每个函数都应包含简要地阐述其功能的注释。
+#该注释应紧跟在函数定义后面，并采用文档字符串格式。
+#PEP 8建议代码行的长度不要超过79字符，这样只要编辑器窗口适中，就能看到整行代码。
+
+# 如果形参很多，导致函数定义的长度超过了79字符，
+# 可在函数定义中输入左括号后按回车键，并在下一行按两次Tab键，
+# 从而将形参列表和只缩进一层的函数体区分开来。
+def abc(
+        safdsf,
+        asdfas,
+        asfasfg,
+        gsagaeg
+        ):
+    print(safdsf)
+
+
+#9 创建和使用类
+#使用类几乎可以模拟任何东西。
+import dog as d
+my_dog = d.Dog('willie',6)
+
+# 9.1 创建一个类
+
+# 9.1.1 定义一个类
+#9.1.2 根据类创建实例
+import dog as d
+my_dog = d.Dog('willie',6)
+#访问属性
+print(my_dog.name) 
+print(my_dog.age)
+#调用方法
+my_dog.sit()
+my_dog.roll_over()
+
+#9.2 使用类和实例
+
+import car as c
+#9.2.2 给属性指定默认值
+my_new_car = c.Car('audi','a4',2019)
+print(my_new_car.get_descriptive_name())
+my_new_car.odometer_reading = 23
+my_new_car.read_odometer()
+
+#9.2.3 修改属性的值
+
+my_new_car.odometer_reading = 55
+my_new_car.read_odometer()
+
+#通过方法修改属性的值
+my_new_car.update_odometer(66)
+my_new_car.read_odometer()
+my_new_car.update_odometer(55)
+my_new_car.read_odometer()
+
+#通过方法对属性的值进行递增
+my_old_car = c.Car('subaru','outback',2013)
+print(my_old_car.get_descriptive_name())
+my_old_car.update_odometer(23_500)
+my_old_car.read_odometer()
+my_old_car.increment_odometer(100)
+my_old_car.read_odometer()
+
+
+
+#9.3 继承
+'''编写类时，并非总是要从空白开始。
+如果要编写的类是另一个现成类的特殊版本，
+可使用继承。一个类继承另一个类时，将自动获得另一个类的所有属性和方法。
+原有的类称为父类，而新类称为子类'''
+
+my_tesla = c.ElectricCar('tesla','model s',2019)
+print(my_tesla.get_descriptive_name())
+my_tesla.describe_battery()
+my_tesla.fill_gas_tank()
+
+my_tesla.battery.describe_battery()
+my_tesla.battery.get_range()
+my_tesla.battery.upgrade_battery()
+
+#9.4.5 导入模块中的所有类
+'''
+要导入模块中的每个类，可使用下面的语法：
+from module_name import *
+不推荐使用这种导入方式，原因有二。
+第一，如果只看文件开头的import语句，就能清楚地知道程序使用了哪些类，将大有裨益。
+然而这种导入方式没有明确地指出使用了模块中的哪些类。
+第二，这种方式还可能引发名称方面的迷惑。
+如果不小心导入了一个与程序文件中其他东西同名的类，将引发难以诊断的错误。
+这里之所以介绍这种导入方式，是因为虽然不推荐使用，但你可能在别人编写的代码中见到它。
+'''
+
+#9.6 类编码风格
+'''
+    类名应采用驼峰命名法
+，即将类名中的每个单词的首字母都大写，而不使用下划线。
+实例名和模块名都采用小写格式，并在单词之间加上下划线。
+对于每个类，都应紧跟在类定义后面包含一个文档字符串。
+这种文档字符串简要地描述类的功能，并遵循编写函数的文档字符串时采用的格式约定。
+每个模块也都应包含一个文档字符串，对其中的类可用于做什么进行描述。
+可使用空行来组织代码，但不要滥用。在类中，可使用一个空行来分隔方法；
+而在模块中，可使用两个空行来分隔类。
+需要同时导入标准库中的模块和你编写的模块时，
+先编写导入标准库模块的import语句，再添加一个空行，
+然后编写导入你自己编写的模块的import语句。
+在包含多条import语句的程序中，这种做法让人更容易明白程序使用的各个模块都来自何处。
+'''
